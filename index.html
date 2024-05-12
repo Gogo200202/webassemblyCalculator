@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+    <input id="num1" />
+    <select id="opt">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+      </select>
+    <input id="num2" />
+    <button id="button">send</button>
+
+    <div id="result"></div>
+       
+
+    <script>
+        let resultDOM=document.getElementById("result");
+      let button=document.getElementById("button");
+      button.addEventListener("click",function(event){
+       let num1=document.getElementById('num1').value;
+       let num2=document.getElementById('num2').value;
+       let opt=document.getElementById('opt').value;
+
+       if(opt=='+'){
+        resultDOM.innerHTML=window.instance.addNums(num1,num2);
+       }else if(opt=='-'){
+        resultDOM.innerHTML=window.instance.SubtractNums(num1,num2);
+       }else if(opt=='*'){
+        resultDOM.innerHTML=window.instance.MultNums(num1,num2);
+       }else if(opt=='/'){
+        resultDOM.innerHTML=window.instance.devNums(num1,num2);
+       }else{
+
+       }
+      })
+
+        const getData = async () => {
+
+
+      let response= await fetch("calculator.wasm");
+      let arrayBuffer=await response.arrayBuffer();
+      let wasm= await WebAssembly.instantiate(arrayBuffer, {console});
+      let instance = wasm.instance.exports;
+      
+     window.instance=instance;
+      
+ 
+
+    }   
+
+    getData();
+   
+
+    
+
+
+
+    
+        </script>
+</body>
+</html>
